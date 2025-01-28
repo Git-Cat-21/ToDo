@@ -14,7 +14,8 @@ elif [[ "$1" == "-d" ]]; then
     echo "to delete tasks"
 
 elif [[ "$1" == "-l" ]]; then 
-    echo "to list tasks"
+    # echo "to list tasks"
+    cat todo.txt
 
 else
     echo "invalid argument"
