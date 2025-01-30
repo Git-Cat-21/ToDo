@@ -3,11 +3,14 @@
 if [[ "$1" == "-a" ]]; then 
     echo "to add tasks"
     if [[ -f "todo.txt" ]]; then
-        lastline= tail -n 1 todo.txt
-        echo $lastline
-        printf "this is the first task when file exists\n" >> todo.txt
-    else
-        printf "this is the first task when file doesnt exist\n" >> todo.txt
+        echo "file exists"
+
+        if [[ -z "$2" ]]; then
+            read -p "No task entered... enter the task   " task
+            echo "$task" >> todo.txt
+        else 
+            printf "$2\n" >> todo.txt
+        fi
     fi
     
 elif [[ "$1" == "-d" ]]; then
