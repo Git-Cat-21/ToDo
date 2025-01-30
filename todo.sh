@@ -29,15 +29,12 @@ elif [[ "$1" == "-d" ]]; then
         task_no="$2"
     fi
 
-    task=$(awk -v task_no="$task_no" -F'\t' '$1 == task_no {print $2}' todo.txt)
+    task=$(cat todo.txt | grep $task_no)
 
     if  [[ -n "$task" ]]; then
-        echo "This is your task: $task"
-        echo "Task exists. Here we mark it as done."
-
-        sed -i "${task_no}s/$/ (done)/" todo.txt
+        sed -i "${task_no}s/$/ (DONE)/" todo.txt
     else
-        echo "Task doesnt exist. So, nahhh"
+        echo "Task doesnt exist. Enter a valid number"
     fi
 
 elif [[ "$1" == "-l" ]]; then 
