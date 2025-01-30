@@ -6,18 +6,18 @@ if [[ "$1" == "-a" ]]; then
 
         if [[ -z "$2" ]]; then
             read -p "No task entered... enter the task:  " task
-            echo "$((line_no))\t$task" >> todo.txt
+            printf "$((line_no+1))\t$task" >> todo.txt
         else 
-            echo "$((line_no))\t$2\n" >> todo.txt
+            printf "$((line_no+1))\t$2\n" >> todo.txt
         fi
-        
+
     else 
-        line_no = 1
+        line_no=1
         if [[ -z "$2" ]]; then
                 read -p "No task entered... enter the task   " task
-                echo "$((line_no))\t$task" >> todo.txt
+                printf "$line_no\t$task" >> todo.txt
             else 
-                echo "$((line_no))\t$2\n" >> todo.txt
+                printf "$line_no\t$2\n" >> todo.txt
             fi
     fi
     
