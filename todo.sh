@@ -1,25 +1,21 @@
 #!/bin/bash
 
 if [[ "$1" == "-a" ]]; then 
-    if [[ -f "todo.txt" ]]; then
-        line_no=$(cat todo.txt | wc -l)
+   file="todo.txt"
 
-        if [[ -z "$2" ]]; then
-            read -p "No task entered... enter the task:  " task
-            printf "$((line_no+1))\t$task" >> todo.txt
-        else 
-            printf "$((line_no+1))\t$2\n" >> todo.txt
-        fi
+    if [[ -f "$file" ]]; then    
+        line_no=$(wc -l < "$file")
+    else
+        line_no=0
+    fi 
 
-    else 
-        line_no=1
-        if [[ -z "$2" ]]; then
-                read -p "No task entered... enter the task   " task
-                printf "$line_no\t$task" >> todo.txt
-            else 
-                printf "$line_no\t$2\n" >> todo.txt
-            fi
+    if [[ -z "$2" ]]; then
+        read -p "No task entered... enter the task: " task
+    else
+        task="$2"
     fi
+
+    printf "%d\t%s\n" "$((line_no + 1))" "$task" >> "$file"
     
 elif [[ "$1" == "-d" ]]; then
 
