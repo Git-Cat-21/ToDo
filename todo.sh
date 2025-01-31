@@ -19,7 +19,7 @@ if [[ "$1" == "-a" ]]; then
         task="$2"
     fi
 
-    printf "%d\t${RED}%s${ENDCOLOR}\n" "$((line_no + 1))" "$task" >> "$file"
+    printf "%d\t%s\n" "$((line_no + 1))" "$task" >> "$file"
     
 elif [[ "$1" == "-d" ]]; then
 
@@ -38,7 +38,15 @@ elif [[ "$1" == "-d" ]]; then
     fi
 
 elif [[ "$1" == "-l" ]]; then 
-    cat todo.txt
+    while read -r LINE
+    do 
+        if echo "$LINE" | grep -q "(DONE)"; then
+            printf "${GREEN}%s${ENDCOLOR}\n" "$LINE"
+        else
+            printf "${RED}%s${ENDCOLOR}\n" "$LINE"
+        fi
+    done < "$file"
+
 
 else
     echo "invalid argument"
