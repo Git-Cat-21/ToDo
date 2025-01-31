@@ -1,8 +1,12 @@
 #!/bin/bash
 
-if [[ "$1" == "-a" ]]; then 
-   file="todo.txt"
+file="todo.txt"
+RED="\e[31m"
+GREEN="\e[32m"
+ENDCOLOR="\e[0m"
 
+if [[ "$1" == "-a" ]]; then 
+    
     if [[ -f "$file" ]]; then    
         line_no=$(wc -l < "$file")
     else
@@ -15,7 +19,7 @@ if [[ "$1" == "-a" ]]; then
         task="$2"
     fi
 
-    printf "%d\t%s\n" "$((line_no + 1))" "$task" >> "$file"
+    printf "%d\t${RED}%s${ENDCOLOR}\n" "$((line_no + 1))" "$task" >> "$file"
     
 elif [[ "$1" == "-d" ]]; then
 
