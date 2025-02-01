@@ -14,14 +14,14 @@ chmod +x todo.sh
 ./todo.sh -a "Buy groceries"
 ```
 
-### Mark task as Done
-```bash
-./todo.sh -d <task number>
-```
-
 ### To list all tasks
 ```bash
 ./todo.sh -l
+```
+
+### Mark task as Done
+```bash
+./todo.sh -d <task number>
 ```
 
 # Left ToDo
