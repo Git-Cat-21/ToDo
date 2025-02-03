@@ -26,5 +26,5 @@ chmod +x todo.sh
 
 # Left ToDo
 - [ ] Add flag -r (remove tasks)
-- [ ] Add flag -h (help) 
+- [x] Add flag -h (help) 
 - [ ] Add flag -R (random task)
