@@ -68,8 +68,7 @@ elif [[ "$1" == "-d" ]]; then
     fi
 
 elif [[ "$1" == "-l" ]]; then 
-    while read -r LINE
-    do 
+    while read -r LINE; do 
         if echo "$LINE" | grep -q "(DONE)"; then
             printf "${GREEN}%s${ENDCOLOR}\n" "$LINE"
         else
@@ -77,25 +76,18 @@ elif [[ "$1" == "-l" ]]; then
         fi
     done < "$file"
 
+elif [[ "$1" == "-r" ]]; then
+    if [[ -z "$2" ]]; then
+        echo "Please provide a task number to remove."
+    elif grep -q "$2" todo.txt; then
+        sed -i "/${2}/d" todo.txt
+        echo "Task $2 removed."
+    else
+        echo "Task number doesn't exist!!!"
+    fi
+
 elif [[ "$1" == "-h" ]]; then
     usage
-
-# elif [[ "$1" == "-R" ]]; then
-#     echo " to list a random"
-#     line_number=$(Random)
-#     total_lines=$(wc -l < "$file")
-
-#     if [[ "$total_lines" -eq 0 ]]; then 
-#         echo "Error: File is Empty"
-#         exit 1
-#     fi
-
-
-#     while true; do
-#         line_number=$((RANDOM % total_lines + 1 ))
-#         selected_lines=$(sed -n "${line_number}p" "$file")
-
-#         if [[ -n "$selected_line" && ! "$selected_line" =~ DONE]]
 
 else
     echo "invalid argument"
