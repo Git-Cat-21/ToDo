@@ -21,12 +21,14 @@ usage(){
     echo "A simple command-line tool to  manage to-do list"
     echo 
     echo -e "${GREEN}Usage:${ENDCOLOR} ./todo.sh [OPTION] [<ARGUMENT>]"
-    echo "-a <task>             To add a task to the list"
-    echo "-d <task_number>      Mark task as done"      
-    echo "-l                    List all tasks"
-    echo "-r <task_number>      To remove a specific task"
-    echo "-lp                   To list pending tasks"
-    echo "-h                    Help function"
+    echo
+    echo "-a <task>                 To add a task to the list"
+    echo "-d <task_num>             Mark task as done"      
+    echo "-l                        List all tasks"
+    echo "-r <task_num>             To remove a specific task"
+    echo "-lp                       To list pending tasks"
+    echo "-e <task_num> <new_task>  To edit a task"
+    echo "-h                        Help function"
 }
 
 Random(){
@@ -101,6 +103,29 @@ elif [[ "$1" == "-lp" ]]; then
             printf "${RED}%s${ENDCOLOR}\n" "$LINE"
         fi
     done < "$file"
+
+# To edit tasks
+elif [[ "$1" == "-e" ]]; then
+    if [[ -z "$2" ]]; then
+        read -p "Enter the task number...:   " task_no
+    else
+        task_no="$2"
+    fi
+
+    if ! grep -q "^$task_no[[:space:]]" "$file"; then
+        echo "Task doesn't exist. Enter a valid number."
+        exit 1
+    fi
+
+    if [[ -z "$3" ]]; then
+        read -p "Enter the new task description: " new_task
+    else
+        new_task="$3"
+    fi
+
+    sed -i "s/^$task_no[[:space:]].*/$task_no	$new_task/" "$file"
+    echo "Task $task_no updated."
+
 
 # Help function 
 elif [[ "$1" == "-h" ]]; then

@@ -44,5 +44,5 @@ chmod +x todo.sh
 - [x] Add flag -h (help) 
 - [x] Add flag -lp (list pending tasks)
 - [ ] Add flag -R (random task)
-- [ ] Add flag -e (edit tasks)
+- [x] Add flag -e (edit tasks)
 - [ ] Add flag -u (Undo Task Completion )
