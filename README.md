@@ -34,6 +34,11 @@ chmod +x todo.sh
 ./todo.sh -lp
 ```
 
+### To edit a task
+```bash
+./todo.sh -e <task_number> <new_task>
+```
+
 ### To view help
 ```bash
 ./todo.sh -h
