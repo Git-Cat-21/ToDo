@@ -24,7 +24,25 @@ chmod +x todo.sh
 ./todo.sh -d <task number>
 ```
 
+### To remove a task
+```bash
+./todo.sh -r <task number>
+```
+
+### To show only pending tasks
+```bash
+./todo.sh -lp
+```
+
+### To view help
+```bash
+./todo.sh -h
+```
+
 # Left ToDo
-- [ ] Add flag -r (remove tasks)
+- [x] Add flag -r (remove tasks)
 - [x] Add flag -h (help) 
+- [x] Add flag -lp (list pending tasks)
 - [ ] Add flag -R (random task)
+- [ ] Add flag -e (edit tasks)
+- [ ] Add flag -u (Undo Task Completion )

@@ -24,6 +24,8 @@ usage(){
     echo "-a <task>             To add a task to the list"
     echo "-d <task_number>      Mark task as done"      
     echo "-l                    List all tasks"
+    echo "-r <task_number>      To remove a specific task"
+    echo "-lp                   To list pending tasks"
     echo "-h                    Help function"
 }
 
@@ -35,6 +37,7 @@ Random(){
     fi
 }
 
+# Add a task
 if [[ "$1" == "-a" ]]; then 
     
     if [[ -f "$file" ]]; then    
@@ -50,7 +53,8 @@ if [[ "$1" == "-a" ]]; then
     fi
 
     printf "%d\t%s\n" "$((line_no + 1))" "$task" >> "$file"
-    
+
+# Mark task as done
 elif [[ "$1" == "-d" ]]; then
 
     if [[ -z "$2" ]]; then
@@ -67,6 +71,7 @@ elif [[ "$1" == "-d" ]]; then
         echo "Task doesnt exist. Enter a valid number"
     fi
 
+# To list all tasks
 elif [[ "$1" == "-l" ]]; then 
     while read -r LINE; do 
         if echo "$LINE" | grep -q "(DONE)"; then
@@ -76,6 +81,7 @@ elif [[ "$1" == "-l" ]]; then
         fi
     done < "$file"
 
+# Remove a task
 elif [[ "$1" == "-r" ]]; then
     if [[ -z "$2" ]]; then
         echo "Please provide a task number to remove."
@@ -86,10 +92,20 @@ elif [[ "$1" == "-r" ]]; then
         echo "Task number doesn't exist!!!"
     fi
 
+# Show pending tasks only
+elif [[ "$1" == "-lp" ]]; then 
+    while read -r LINE; do 
+        if echo "$LINE" | grep -q "(DONE)"; then
+            continue
+        else
+            printf "${RED}%s${ENDCOLOR}\n" "$LINE"
+        fi
+    done < "$file"
+
+# Help function 
 elif [[ "$1" == "-h" ]]; then
     usage
 
 else
     echo "invalid argument"
 fi
-
