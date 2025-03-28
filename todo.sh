@@ -128,7 +128,7 @@ elif [[ "$1" == "-e" ]]; then
 
 
 # Help function 
-elif [[ "$1" == "-h" ]]; then
+elif [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
     usage
 
 else
