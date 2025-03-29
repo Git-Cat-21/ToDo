@@ -9,36 +9,6 @@ cd ToDo
 chmod +x todo.sh
 ```
 
-### Add a Task
-```bash
-./todo.sh -a "Buy groceries"
-```
-
-### To list all tasks
-```bash
-./todo.sh -l
-```
-
-### Mark task as Done
-```bash
-./todo.sh -d <task number>
-```
-
-### To remove a task
-```bash
-./todo.sh -r <task number>
-```
-
-### To show only pending tasks
-```bash
-./todo.sh -lp
-```
-
-### To edit a task
-```bash
-./todo.sh -e <task_number> <new_task>
-```
-
 ### To view help
 ```bash
 ./todo.sh -h
@@ -50,4 +20,4 @@ chmod +x todo.sh
 - [x] Add flag -lp (list pending tasks)
 - [ ] Add flag -R (random task)
 - [x] Add flag -e (edit tasks)
-- [ ] Add flag -u (Undo Task Completion )
+- [x] Add flag -u (Undo Task Completion )

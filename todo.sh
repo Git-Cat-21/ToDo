@@ -28,6 +28,7 @@ usage(){
     echo "-r <task_num>             To remove a specific task"
     echo "-lp                       To list pending tasks"
     echo "-e <task_num> <new_task>  To edit a task"
+    echo "-u <task_num>             To undo task completion"
     echo "-h                        Help function"
 }
 
@@ -126,6 +127,24 @@ elif [[ "$1" == "-e" ]]; then
     sed -i "s/^$task_no[[:space:]].*/$task_no	$new_task/" "$file"
     echo "Task $task_no updated."
 
+
+# To undo task completion 
+elif [[ "$1" == "-u" ]]; then
+    if [[ -z "$2" ]]; then
+        read -p "Enter the task number...:  " task_no
+    else
+        task_no="$2"
+    fi
+
+    if ! grep -q "^$task_no[[:space:]]" "$file"; then
+        echo "Task doesn't exist. Enter a valid number."
+        exit 1
+    fi
+
+    sed -i "/^$task_no[[:space:]]/s/ (DONE)//" "$file"
+
+    echo "Task $task_no marked as incomplete."
+ 
 
 # Help function 
 elif [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
