@@ -69,7 +69,8 @@ elif [[ "$1" == "-d" ]]; then
     task=$(cat todo.txt | grep $task_no)
 
     if  [[ -n "$task" ]]; then
-        sed -i "${task_no}s/$/ (DONE)/" todo.txt
+        # sed -i "${task_no}s/$/ (DONE)/" todo.txt
+        sed -i "${task_no}s/$/ ✅/" todo.txt
     else
         echo "Task doesnt exist. Enter a valid number"
     fi
@@ -77,7 +78,8 @@ elif [[ "$1" == "-d" ]]; then
 # To list all tasks
 elif [[ "$1" == "-l" ]]; then 
     while read -r LINE; do 
-        if echo "$LINE" | grep -q "(DONE)"; then
+        # if echo "$LINE" | grep -q "(DONE)"; then
+        if echo "$LINE" | grep -q "✅"; then
             printf "${GREEN}%s${ENDCOLOR}\n" "$LINE"
         else
             printf "${RED}%s${ENDCOLOR}\n" "$LINE"
@@ -98,7 +100,8 @@ elif [[ "$1" == "-r" ]]; then
 # Show pending tasks only
 elif [[ "$1" == "-lp" ]]; then 
     while read -r LINE; do 
-        if echo "$LINE" | grep -q "(DONE)"; then
+        # if echo "$LINE" | grep -q "(DONE)"; then
+        if echo "$LINE" | grep -q "✅"; then
             continue
         else
             printf "${RED}%s${ENDCOLOR}\n" "$LINE"
@@ -141,7 +144,8 @@ elif [[ "$1" == "-u" ]]; then
         exit 1
     fi
 
-    sed -i "/^$task_no[[:space:]]/s/ (DONE)//" "$file"
+    # sed -i "/^$task_no[[:space:]]/s/ (DONE)//" "$file"
+    sed -i "/^$task_no[[:space:]]/s/ ✅//" "$file"
 
     echo "Task $task_no marked as incomplete."
  
