@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file="todo.txt"
+file="$HOME/todo.txt"
 RED="\e[31m"
 GREEN="\e[32m"
 ENDCOLOR="\e[0m"
@@ -32,13 +32,9 @@ usage(){
     echo "-h                        Help function"
 }
 
-Random(){
-    if [[ -f "$file"  ]]; then 
-        line_no="$(wc -l < "$file")"
-        random_number=$((1 + RANDOM % line_no))
-        echo "$random_number"
-    fi
-}
+if [[ ! -f "$file" ]]; then 
+    touch "$file"
+fi 
 
 # Add a task
 if [[ "$1" == "-a" ]]; then 
@@ -66,11 +62,11 @@ elif [[ "$1" == "-d" ]]; then
         task_no="$2"
     fi
 
-    task=$(cat todo.txt | grep $task_no)
+    task=$(cat "$file" | grep $task_no)
 
     if  [[ -n "$task" ]]; then
         # sed -i "${task_no}s/$/ (DONE)/" todo.txt
-        sed -i "${task_no}s/$/ ✅/" todo.txt
+        sed -i "${task_no}s/$/ ✅/" "$file"
     else
         echo "Task doesnt exist. Enter a valid number"
     fi
@@ -90,8 +86,8 @@ elif [[ "$1" == "-l" ]]; then
 elif [[ "$1" == "-r" ]]; then
     if [[ -z "$2" ]]; then
         echo "Please provide a task number to remove."
-    elif grep -q "$2" todo.txt; then
-        sed -i "/${2}/d" todo.txt
+    elif grep -q "$2" "$file"; then
+        sed -i "/${2}/d" "$file"
         echo "Task $2 removed."
     else
         echo "Task number doesn't exist!!!"
