@@ -6,8 +6,8 @@ This is a simple Bash script to manage a todo list. The script allows you to add
 ```bash
 git clone git@github.com:Git-Cat-21/ToDo.git
 cd ToDo
-sudo cp todo.sh /usr/local/bin/todo
-sudo chmod +x /usr/local/bin/todo
+chmod +x todo.sh
+sudo cp ./todo.sh /usr/local/bin/todo
 ```
 
 ### To view help
