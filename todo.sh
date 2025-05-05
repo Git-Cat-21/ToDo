@@ -20,7 +20,7 @@ usage(){
     echo "---------------------------------------"
     echo "A simple command-line tool to  manage to-do list"
     echo 
-    echo -e "${GREEN}Usage:${ENDCOLOR} ./todo.sh [OPTION] [<ARGUMENT>]"
+    echo -e "${GREEN}Usage:${ENDCOLOR} todo [OPTION] [<ARGUMENT>]"
     echo
     echo "-a <task>                 To add a task to the list"
     echo "-d <task_num>             Mark task as done"      
@@ -29,6 +29,7 @@ usage(){
     echo "-lp                       To list pending tasks"
     echo "-e <task_num> <new_task>  To edit a task"
     echo "-u <task_num>             To undo task completion"
+    echo "-c                        To clear contents of the file" 
     echo "-h                        Help function"
 }
 
@@ -126,7 +127,6 @@ elif [[ "$1" == "-e" ]]; then
     sed -i "s/^$task_no[[:space:]].*/$task_no	$new_task/" "$file"
     echo "Task $task_no updated."
 
-
 # To undo task completion 
 elif [[ "$1" == "-u" ]]; then
     if [[ -z "$2" ]]; then
@@ -145,6 +145,9 @@ elif [[ "$1" == "-u" ]]; then
 
     echo "Task $task_no marked as incomplete."
  
+# To clear contents of the file
+elif [[ "$1" == "-c" ]]; then
+    truncate -s 0 $file
 
 # Help function 
 elif [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
