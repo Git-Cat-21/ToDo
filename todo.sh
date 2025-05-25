@@ -53,6 +53,7 @@ if [[ "$1" == "-a" ]]; then
     fi
 
     printf "%d\t%s\n" "$((line_no + 1))" "$task" >> "$file"
+    echo "Task entered successfully."
 
 # Mark task as done
 elif [[ "$1" == "-d" ]]; then
@@ -147,7 +148,11 @@ elif [[ "$1" == "-u" ]]; then
  
 # To clear contents of the file
 elif [[ "$1" == "-c" ]]; then
-    truncate -s 0 $file
+    read -p "Are you sure you wish to clear the contents (y)yes (n)no?" choice
+    if [[ "$choice" == "y" ]]; then
+        truncate -s 0 $file
+        echo "File cleared successfully."
+    fi
 
 # Help function 
 elif [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
