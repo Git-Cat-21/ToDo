@@ -21,4 +21,5 @@ todo
 - [x] Add flag -lp (list pending tasks)
 - [ ] Add flag -R (random task)
 - [x] Add flag -e (edit tasks)
-- [x] Add flag -u (Undo Task Completion )
+- [x] Add flag -u (Undo Task Completion)
+- [ ] Add a search functionality
