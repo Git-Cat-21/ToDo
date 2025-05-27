@@ -22,4 +22,4 @@ todo
 - [ ] Add flag -R (random task)
 - [x] Add flag -e (edit tasks)
 - [x] Add flag -u (Undo Task Completion)
-- [ ] Add a search functionality
+- [x] Add a search task functionality

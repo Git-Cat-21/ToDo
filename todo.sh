@@ -30,6 +30,7 @@ usage(){
     echo "-e <task_num> <new_task>  To edit a task"
     echo "-u <task_num>             To undo task completion"
     echo "-c                        To clear contents of the file" 
+    echo "-s <keyword>              To search for tasks"
     echo "-h                        Help function"
 }
 
@@ -152,6 +153,22 @@ elif [[ "$1" == "-c" ]]; then
     if [[ "$choice" == "y" ]]; then
         truncate -s 0 $file
         echo "File cleared successfully."
+    fi
+
+# Task search
+elif [[ "$1" == "-s" ]]; then 
+    if [[ -z "$2" ]]; then 
+        read -p "please enter the search key " task
+    else
+        task="$2"
+    fi
+
+    grep "$task" "$file"
+    
+    if [[ $? -eq 0 ]]; then 
+        cat "$file" | grep "$task"
+    else
+        echo "Task not found"
     fi
 
 # Help function 
