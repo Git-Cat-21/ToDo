@@ -73,6 +73,7 @@ elif [[ "$1" == "-d" ]]; then
     else
         echo "Task doesnt exist. Enter a valid number"
     fi
+    echo "Task $task_no marked done successfully."
 
 # To list all tasks
 elif [[ "$1" == "-l" ]]; then 
@@ -88,10 +89,14 @@ elif [[ "$1" == "-l" ]]; then
 # Remove a task
 elif [[ "$1" == "-r" ]]; then
     if [[ -z "$2" ]]; then
-        echo "Please provide a task number to remove."
-    elif grep -q "$2" "$file"; then
-        sed -i "/${2}/d" "$file"
-        echo "Task $2 removed."
+        read -p "Please provide a task number to remove. " task
+    else
+        task="$2"
+    fi
+
+    if grep -q "$task" "$file"; then
+        sed -i "/${task}/d" "$file"
+        echo "Task $task removed."
     else
         echo "Task number doesn't exist!!!"
     fi
