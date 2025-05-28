@@ -58,22 +58,24 @@ if [[ "$1" == "-a" ]]; then
 
 # Mark task as done
 elif [[ "$1" == "-d" ]]; then
+    read -p "Are you sure you want to mark the task done yes(y) or no(n) " choice
+    if [[ "$choice" == "y" || -z "$choice" ]]; then
+        if [[ -z "$2" ]]; then
+            read -p "Enter the task number...:   " task_no
+        else
+            task_no="$2"
+        fi
 
-    if [[ -z "$2" ]]; then
-        read -p "Enter the task number...:   " task_no
-    else
-        task_no="$2"
+        task=$(cat "$file" | grep $task_no)
+
+        if  [[ -n "$task" ]]; then
+            # sed -i "${task_no}s/$/ (DONE)/" todo.txt
+            sed -i "${task_no}s/$/ ✅/" "$file"
+        else
+            echo "Task doesnt exist. Enter a valid number"
+        fi
+        echo "Task $task_no marked done successfully."
     fi
-
-    task=$(cat "$file" | grep $task_no)
-
-    if  [[ -n "$task" ]]; then
-        # sed -i "${task_no}s/$/ (DONE)/" todo.txt
-        sed -i "${task_no}s/$/ ✅/" "$file"
-    else
-        echo "Task doesnt exist. Enter a valid number"
-    fi
-    echo "Task $task_no marked done successfully."
 
 # To list all tasks
 elif [[ "$1" == "-l" ]]; then 
@@ -88,17 +90,20 @@ elif [[ "$1" == "-l" ]]; then
 
 # Remove a task
 elif [[ "$1" == "-r" ]]; then
-    if [[ -z "$2" ]]; then
-        read -p "Please provide a task number to remove. " task
-    else
-        task="$2"
-    fi
+    read -p "Are you sure you wish to remove a task yes(y) or no(n) " choice
+    if [[ "$choice" == "y" || -z "$choice" ]]; then
+        if [[ -z "$2" ]]; then
+            read -p "Please provide a task number to remove. " task
+        else
+            task="$2"
+        fi
 
-    if grep -q "$task" "$file"; then
-        sed -i "/${task}/d" "$file"
-        echo "Task $task removed."
-    else
-        echo "Task number doesn't exist!!!"
+        if grep -q "$task" "$file"; then
+            sed -i "/${task}/d" "$file"
+            echo "Task $task removed."
+        else
+            echo "Task number doesn't exist!!!"
+        fi
     fi
 
 # Show pending tasks only
@@ -114,48 +119,54 @@ elif [[ "$1" == "-lp" ]]; then
 
 # To edit tasks
 elif [[ "$1" == "-e" ]]; then
-    if [[ -z "$2" ]]; then
-        read -p "Enter the task number...:   " task_no
-    else
-        task_no="$2"
-    fi
+    read -p "Are you sure you wish to edit the task yes(y) or no(n) " choice
+    if [[ "$choice" == "y" || -z "$choice" ]]; then
+        if [[ -z "$2" ]]; then
+            read -p "Enter the task number...:   " task_no
+        else
+            task_no="$2"
+        fi
 
-    if ! grep -q "^$task_no[[:space:]]" "$file"; then
-        echo "Task doesn't exist. Enter a valid number."
-        exit 1
-    fi
+        if ! grep -q "^$task_no[[:space:]]" "$file"; then
+            echo "Task doesn't exist. Enter a valid number."
+            exit 1
+        fi
 
-    if [[ -z "$3" ]]; then
-        read -p "Enter the new task description: " new_task
-    else
-        new_task="$3"
-    fi
+        if [[ -z "$3" ]]; then
+            read -p "Enter the new task description: " new_task
+        else
+            new_task="$3"
+        fi
 
-    sed -i "s/^$task_no[[:space:]].*/$task_no	$new_task/" "$file"
-    echo "Task $task_no updated."
+        sed -i "s/^$task_no[[:space:]].*/$task_no	$new_task/" "$file"
+        echo "Task $task_no updated."
+    fi
 
 # To undo task completion 
 elif [[ "$1" == "-u" ]]; then
-    if [[ -z "$2" ]]; then
-        read -p "Enter the task number...:  " task_no
-    else
-        task_no="$2"
+    read -p "Are you sure you wish to mark the task undone yes(y) or no(n) " choice
+    if [[ "$choice" == "y" || -z "$choice"   ]]; then 
+        if [[ -z "$2" ]]; then
+            read -p "Enter the task number...:  " task_no
+        else
+            task_no="$2"
+        fi
+
+        if ! grep -q "^$task_no[[:space:]]" "$file"; then
+            echo "Task doesn't exist. Enter a valid number."
+            exit 1
+        fi
+
+        # sed -i "/^$task_no[[:space:]]/s/ (DONE)//" "$file"
+        sed -i "/^$task_no[[:space:]]/s/ ✅//" "$file"
+
+        echo "Task $task_no marked as incomplete."
     fi
-
-    if ! grep -q "^$task_no[[:space:]]" "$file"; then
-        echo "Task doesn't exist. Enter a valid number."
-        exit 1
-    fi
-
-    # sed -i "/^$task_no[[:space:]]/s/ (DONE)//" "$file"
-    sed -i "/^$task_no[[:space:]]/s/ ✅//" "$file"
-
-    echo "Task $task_no marked as incomplete."
  
 # To clear contents of the file
 elif [[ "$1" == "-c" ]]; then
     read -p "Are you sure you wish to clear the contents (y)yes (n)no?" choice
-    if [[ "$choice" == "y" ]]; then
+    if [[ "$choice" == "y" || -z "$choice" ]]; then
         truncate -s 0 $file
         echo "File cleared successfully."
     fi
