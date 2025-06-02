@@ -70,11 +70,12 @@ elif [[ "$1" == "-d" ]]; then
 
         if  [[ -n "$task" ]]; then
             # sed -i "${task_no}s/$/ (DONE)/" todo.txt
-            sed -i "${task_no}s/$/ ✅/" "$file"
+            # sed -i "${task_no}s/$/ ✅/" "$file"
+            sed -i "/^$task[[:space:]]/s/$/ ✅/" "$file"
+            echo "Task $task_no marked done successfully."
         else
             echo "Task doesnt exist. Enter a valid number"
         fi
-        echo "Task $task_no marked done successfully."
     fi
 
 # To list all tasks
@@ -98,8 +99,9 @@ elif [[ "$1" == "-r" ]]; then
             task="$2"
         fi
 
-        if grep -q "$task" "$file"; then
-            sed -i "/${task}/d" "$file"
+        if grep -q "$task[[:space:]]" "$file"; then
+            # sed -i "/${task}/d" "$file"
+            sed -i "/^$task[[:space:]]/d" "$file"
             echo "Task $task removed."
         else
             echo "Task number doesn't exist!!!"
