@@ -34,6 +34,16 @@ usage(){
     echo "-h                        Help function"
 }
 
+reindex_tasks() {
+    tmpfile=$(mktemp)
+    lineno=1
+    while IFS=$'\t' read -r num task; do
+        echo -e "$lineno\t$task" >> "$tmpfile"
+        ((lineno++))
+    done < "$file"
+    mv "$tmpfile" "$file"
+}
+
 if [[ ! -f "$file" ]]; then 
     touch "$file"
 fi 
@@ -55,6 +65,7 @@ if [[ "$1" == "-a" ]]; then
 
     printf "%d\t%s\n" "$((line_no + 1))" "$task" >> "$file"
     echo "Task entered successfully."
+    reindex_tasks
 
 # Mark task as done
 elif [[ "$1" == "-d" ]]; then
@@ -103,6 +114,7 @@ elif [[ "$1" == "-r" ]]; then
             # sed -i "/${task}/d" "$file"
             sed -i "/^$task[[:space:]]/d" "$file"
             echo "Task $task removed."
+            reindex_tasks
         else
             echo "Task number doesn't exist!!!"
         fi
