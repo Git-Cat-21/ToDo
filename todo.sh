@@ -75,7 +75,7 @@ if [[ "$1" == "-a" ]]; then
     fi
 
     printf "%d\t%s\n" "$((line_no + 1))" "$task" >> "$file"
-    printf "%d\t%s\t[%s]\n" "$((line_no_fh + 1))" "$task" "$(date)" >> "$hist_file"
+    printf "%d\t%s\t[%s]\t\n" "$((line_no_fh + 1))" "$task" "$(date)" >> "$hist_file"
 
     echo "Task entered successfully."
     reindex_tasks
