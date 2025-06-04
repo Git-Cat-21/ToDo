@@ -33,6 +33,7 @@ usage(){
     echo "-c                        Clear all tasks from the list" 
     echo "-s <keyword>              Search for tasks containing a keyword" 
     echo "-his                      Show the entire history of tasks (including deleted or edited)"
+    echo "-clean                    Clean up tasks marked as done"
     echo "-h                        Display this help menu"   
   }
 
@@ -211,6 +212,10 @@ elif [[ "$1" == "-s" ]]; then
     else
         echo "Task not found"
     fi
+
+# To list the contents of the history file
+elif [[ "$1" == "-his" ]]; then
+    cat "$hist_file"
 
 # To clean up tasks
 elif [[ "$1" == "-clean" ]]; then   
