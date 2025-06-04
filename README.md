@@ -23,3 +23,4 @@ todo
 - [x] Add flag -e (edit tasks)
 - [x] Add flag -u (Undo Task Completion)
 - [x] Add a search task functionality
+- [x] A history file to keep track of all the tasks

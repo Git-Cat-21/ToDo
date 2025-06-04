@@ -1,6 +1,7 @@
 #!/bin/bash
 
 file="$HOME/todo.txt"
+hist_file="$HOME/history_todo.txt"
 RED="\e[31m"
 GREEN="\e[32m"
 ENDCOLOR="\e[0m"
@@ -22,17 +23,18 @@ usage(){
     echo 
     echo -e "${GREEN}Usage:${ENDCOLOR} todo [OPTION] [<ARGUMENT>]"
     echo
-    echo "-a <task>                 To add a task to the list"
-    echo "-d <task_num>             Mark task as done"      
-    echo "-l                        List all tasks"
-    echo "-r <task_num>             To remove a specific task"
-    echo "-lp                       To list pending tasks"
-    echo "-e <task_num> <new_task>  To edit a task"
-    echo "-u <task_num>             To undo task completion"
-    echo "-c                        To clear contents of the file" 
-    echo "-s <keyword>              To search for tasks"
-    echo "-h                        Help function"
-}
+    echo "-a <task>                 Add a new task to the list"
+    echo "-d <task_num>             Mark a specific task as done"      
+    echo "-l                        List all tasks (both done and pending)"
+    echo "-r <task_num>             Remove a specific task from the list"
+    echo "-lp                       List only the pending tasks"
+    echo "-e <task_num> <new_task>  Edit an existing task"
+    echo "-u <task_num>             Undo completion of a task"
+    echo "-c                        Clear all tasks from the list" 
+    echo "-s <keyword>              Search for tasks containing a keyword" 
+    echo "-his                      Show the entire history of tasks (including deleted or edited)"
+    echo "-h                        Display this help menu"   
+  }
 
 reindex_tasks() {
     tmpfile=$(mktemp)
@@ -44,15 +46,17 @@ reindex_tasks() {
     mv "$tmpfile" "$file"
 }
 
-if [[ ! -f "$file" ]]; then 
-    touch "$file"
+if [[ ! -f "$file" || ! -f "$hist_file" ]]; then 
+    touch "$file" "$hist_file"
 fi 
+
 
 # Add a task
 if [[ "$1" == "-a" ]]; then 
     
     if [[ -f "$file" ]]; then    
         line_no=$(wc -l < "$file")
+        line_no_fh=$(wc -l < "$hist_file")
     else
         line_no=0
     fi 
@@ -64,6 +68,8 @@ if [[ "$1" == "-a" ]]; then
     fi
 
     printf "%d\t%s\n" "$((line_no + 1))" "$task" >> "$file"
+    printf "%d\t%s\t[%s]\n" "$((line_no_fh + 1))" "$task" "$(date)" >> "$hist_file"
+
     echo "Task entered successfully."
     reindex_tasks
 
