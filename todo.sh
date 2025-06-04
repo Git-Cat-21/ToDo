@@ -46,6 +46,12 @@ reindex_tasks() {
     mv "$tmpfile" "$file"
 }
 
+cleanup_tasks() {
+    grep -v "✅" "$file" > "$file.tmp"
+    mv "$file.tmp" "$file"
+    reindex_tasks
+}
+
 if [[ ! -f "$file" || ! -f "$hist_file" ]]; then 
     touch "$file" "$hist_file"
 fi 
@@ -85,14 +91,13 @@ elif [[ "$1" == "-d" ]]; then
 
         task=$(cat "$file" | grep $task_no)
 
-        if  [[ -n "$task" ]]; then
-            # sed -i "${task_no}s/$/ (DONE)/" todo.txt
-            # sed -i "${task_no}s/$/ ✅/" "$file"
-            sed -i "/^$task[[:space:]]/s/$/ ✅/" "$file"
+        if grep -q "^$task_no[[:space:]]" "$file"; then
+            sed -i "/^$task_no[[:space:]]/s/$/ ✅/" "$file"
             echo "Task $task_no marked done successfully."
         else
-            echo "Task doesnt exist. Enter a valid number"
+            echo "Task doesn't exist. Enter a valid number."
         fi
+
     fi
 
 # To list all tasks
@@ -206,6 +211,11 @@ elif [[ "$1" == "-s" ]]; then
     else
         echo "Task not found"
     fi
+
+# To clean up tasks
+elif [[ "$1" == "-clean" ]]; then   
+    cleanup_tasks
+    echo "Cleaned up completed tasks"
 
 # Help function 
 elif [[ "$1" == "-h" ]] || [[ -z "$1" ]]; then
