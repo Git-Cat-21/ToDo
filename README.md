@@ -1,5 +1,8 @@
 # ToDo List Manager
 [![starline](https://starlines.qoo.monster/assets/Git-Cat-21/ToDo)](https://github.com/Git-Cat-21/ToDo)
+
+----
+
 This is a simple Bash script to manage a todo list. The script allows you to add tasks, mark tasks as done, and list all tasks.
 
 ## Usage
