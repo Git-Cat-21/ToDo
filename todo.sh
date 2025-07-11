@@ -209,9 +209,7 @@ elif [[ "$1" == "-s" ]]; then
 
     grep "$task" "$file"
     
-    if [[ $? -eq 0 ]]; then 
-        cat "$file" | grep "$task"
-    else
+    if ! [[ $? -eq 0 ]]; then 
         echo "Task not found"
     fi
 
