@@ -6,36 +6,38 @@ RED="\e[31m"
 GREEN="\e[32m"
 ENDCOLOR="\e[0m"
 
-ascii_art="████████╗ ██████╗ ██████╗  ██████╗ 
+ascii_art="
+████████╗ ██████╗ ██████╗  ██████╗ 
 ╚══██╔══╝██╔═══██╗██╔══██╗██╔═══██╗
    ██║   ██║   ██║██║  ██║██║   ██║
    ██║   ██║   ██║██║  ██║██║   ██║
    ██║   ╚██████╔╝██████╔╝╚██████╔╝
-   ╚═╝    ╚═════╝ ╚═════╝  ╚═════╝"
+   ╚═╝    ╚═════╝ ╚═════╝  ╚═════╝
+"
 
 
-
-usage(){
-    echo "---------------------------------------"
-    echo "$ascii_art"
-    echo "---------------------------------------"
-    echo "A simple command-line tool to  manage to-do list"
-    echo 
-    echo -e "${GREEN}Usage:${ENDCOLOR} todo [OPTION] [<ARGUMENT>]"
+usage() {
+    echo -e "\n\033[1;37m---------------------------------------\033[0m"
+    echo -e "\033[1;32m$ascii_art\033[0m"
+    echo -e "\033[1;37m---------------------------------------\033[0m"
+    echo -e "\033[1;33mA simple command-line tool to manage your to-do list\033[0m"
     echo
-    echo "-a <task>                 Add a new task to the list"
-    echo "-d <task_num>             Mark a specific task as done"      
-    echo "-l                        List all tasks (both done and pending)"
-    echo "-r <task_num>             Remove a specific task from the list"
-    echo "-lp                       List only the pending tasks"
-    echo "-e <task_num> <new_task>  Edit an existing task"
-    echo "-u <task_num>             Undo completion of a task"
-    echo "-c                        Clear all tasks from the list" 
-    echo "-s <keyword>              Search for tasks containing a keyword" 
-    echo "-his                      Show the entire history of tasks (including deleted or edited)"
-    echo "-clean                    Clean up tasks marked as done"
-    echo "-h                        Display this help menu"   
-  }
+    echo -e "\033[1;36mUsage:\033[0m \033[1;37mtodo [OPTION] [<ARGUMENT>]\033[0m"
+    echo
+    echo -e "\033[1;35mOptions:\033[0m"
+    echo -e "  \033[1;32m-a <task>\033[0m                 Add a new task to the list"
+    echo -e "  \033[1;32m-d <task_num>\033[0m             Mark a specific task as done"
+    echo -e "  \033[1;32m-l\033[0m                        List all tasks "
+    echo -e "  \033[1;32m-r <task_num>\033[0m             Remove a specific task from the list"
+    echo -e "  \033[1;32m-lp\033[0m                       List only the pending tasks"
+    echo -e "  \033[1;32m-e <task_num> <new_task>\033[0m  Edit an existing task"
+    echo -e "  \033[1;32m-u <task_num>\033[0m             Undo completion of a task"
+    echo -e "  \033[1;32m-c\033[0m                        Clear all tasks from the list"
+    echo -e "  \033[1;32m-s <keyword>\033[0m              Search for tasks containing a keyword"
+    echo -e "  \033[1;32m-his\033[0m                      Show the entire history of tasks"
+    echo -e "  \033[1;32m-clean\033[0m                    Clean up tasks marked as done"
+    echo -e "  \033[1;32m-h\033[0m                        Display this help menu"
+}
 
 reindex_tasks() {
     tmpfile=$(mktemp)
