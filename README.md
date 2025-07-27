@@ -31,13 +31,26 @@ crontab -e
 ```bash
 0 14 * * 0  /usr/local/bin/todo -clean
 ```
-
 ## Manual Cleanup
 
 ### To manually clean up completed tasks at any time, run: 
 ```bash
 todo -clean
 ```
+
+----
+
+## Want a friendly nudge to check your todo list?
+
+Put `notify.sh` in your home directory.
+
+> Open your crontab (yes, again!) and add this line for hourly reminders:
+```bash
+0 * * * * DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus ~/notify.sh
+```
+Now, every hour, your computer will gently (or annoyingly) remind you that your tasks aren’t going to finish themselves!
+
+---
 
 # Left ToDo
 - [x] Add flag -r (remove tasks)
